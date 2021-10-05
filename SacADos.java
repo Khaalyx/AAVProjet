@@ -25,13 +25,7 @@ public class SacADos {
         for(int i = objets.size() - 1; i >= 0; --i) {
             poids_tot += objets.get(i).getPoids();
             val_tot += objets.get(i).getValeur();
-            obj += "   > ";
-            obj += objets.get(i).getNom();
-            obj += " ; ";
-            obj += objets.get(i).getPoids();
-            obj += " ; ";
-            obj += objets.get(i).getValeur();
-            obj += "\n";
+            obj = obj + "   > " + objets.get(i).toString() + "\n";
         }
         s = s + "- Poids total : " + poids_tot + "/" + poids_max + "\n";
         s = s + "- Valeur totale : " + val_tot + "\n";
