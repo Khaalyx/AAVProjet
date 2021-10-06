@@ -1,33 +1,35 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SacADos {
     private String chemin;
     private float poids_max;
+    private float poids;
     private ArrayList<Objet> objets;
 
     SacADos(){
         chemin = null;
         poids_max = 0;
-        objets = new ArrayList<Objet>();
+        poids = 0;
+        objets = new ArrayList<>();
     }
 
     SacADos(String chemin, float poids_maximal){
         this.chemin = chemin;
         poids_max = poids_maximal;
-        objets = new ArrayList<Objet>();
+        poids = 0;
+        objets = new ArrayList<>();
     }
 
     public String toString(){
         String s = "- Chemin : " + chemin + "\n";
         String obj = "";
-        float poids_tot = 0;
         float val_tot = 0;
         for(int i = objets.size() - 1; i >= 0; --i) {
-            poids_tot += objets.get(i).getPoids();
             val_tot += objets.get(i).getValeur();
             obj = obj + "   > " + objets.get(i).toString() + "\n";
         }
-        s = s + "- Poids total : " + poids_tot + "/" + poids_max + "\n";
+        s = s + "- Poids total : " + String.format("%1$.2f", poids) + "/" + poids_max + "\n";
         s = s + "- Valeur totale : " + val_tot + "\n";
         s = s + "- " + objets.size() + " objets :\n";
         s += obj;
@@ -44,9 +46,14 @@ public class SacADos {
     }
 
     public void gloutonne(ArrayList<Objet> obj) {
-
+        Collections.sort(obj, Collections.reverseOrder());
+        for (int i = 0; i < obj.size(); ++i) {
+            if (obj.get(i).getPoids() + poids < poids_max) {
+                objets.add(obj.get(i));
+                poids += obj.get(i).getPoids();
+            }
+        }
     }
-
 
     public void dynamique(ArrayList<Objet> obj) {
         float[][] M = new float[obj.size()][(int) (poids_max + 1)];
@@ -62,10 +69,7 @@ public class SacADos {
                 if(obj.get(i).getPoids() > j)
                     M[i][j] = M[i-1][j];
                 else {
-                    if(M[i-1][j] > M[i-1][(int) (j-obj.get(i).getPoids())] + obj.get(i).getValeur())
-                        M[i][j] = M[i-1][j];
-                    else
-                        M[i][j] = M[i-1][(int) (j-obj.get(i).getPoids())] + obj.get(i).getValeur();
+                    M[i][j] = Math.max(M[i-1][j], M[i-1][(int) (j-obj.get(i).getPoids())] + obj.get(i).getValeur());
                 }
             }
         }
@@ -80,13 +84,16 @@ public class SacADos {
                 --i;
             }
             j = (int) (j - obj.get(i).getPoids());
-            if(j >= 0)
+            if(j >= 0) {
                 objets.add(obj.get(i));
+                poids += obj.get(i).getPoids();
+            }
             --i;
         }
     }
 
     public void pse(ArrayList<Objet> obj) {
+        ABR arbre = new ABR();
 
     }
 }
