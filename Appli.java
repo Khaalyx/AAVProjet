@@ -35,7 +35,7 @@ public class Appli {
      * @return true si la saisie est valide
      */
 
-    public static boolean estValide(String s) {
+    private static boolean estValide(String s) {
         Scanner scs = new Scanner(s);
         String mot = scs.next();
 
@@ -85,7 +85,7 @@ public class Appli {
      * @param file Le nom du fichier
      * @return une ArrayList des objets
      */
-    public static ArrayList<Objet> lire(String file) throws FileNotFoundException {
+    private static ArrayList<Objet> lire(String file) throws FileNotFoundException {
         ArrayList<Objet> obj = new ArrayList<Objet>();
         Scanner scan = new Scanner(new FileInputStream(file));
         while(scan.hasNextLine()){
