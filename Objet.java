@@ -12,28 +12,13 @@ public class Objet implements Comparable <Objet> {
         this.valeur = val;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     public float getValeur() {
         return valeur;
     }
 
-    public void setValeur(float valeur) {
-        this.valeur = valeur;
-    }
-
     public float getPoids() {
         return poids;
-    }
-
-    public void setPoids(float poids) {
-        this.poids = poids;
     }
 
     public String toString() {
