@@ -3,26 +3,23 @@ import java.util.ArrayList;
 public class ABR {
     private ArrayList<Objet> listeObjets;
     private ABR filsGauche, filsDroit;
+    private static float borneInf;
+    private float borneSup;
+    private int profondeur;
 
-    public ABR() {}
-
-    public ABR(ArrayList<Objet> obj) {
+    public ABR(ArrayList<Objet> obj, ArrayList<Objet> objAMettre, float poidsMax, int i) {
+        int size = (objAMettre == null) ? 0 : objAMettre.size();
         this.listeObjets = obj;
-        this.filsGauche = new ABR();
-        this.filsDroit = new ABR();
-    }
+        this.profondeur = i;
 
-    public boolean isEmpty() { return listeObjets == null; }
-
-    public void ajouter(ArrayList<Objet> obj) {
-        if(this.filsDroit.isEmpty()){
-            this.filsDroit = new ABR(obj);
-            this.filsGauche = new ABR(this.listeObjets);
-        }
-        else {
-            this.filsDroit.ajouter(obj);
+        if(profondeur < size) {
+            this.filsGauche = new ABR(listeObjets, objAMettre, poidsMax, profondeur + 1);
+            ArrayList<Objet> listObj = new ArrayList<>();
+            if(obj != null)
+                for(Objet o : obj)
+                    listObj.add(o);
+            listObj.add(objAMettre.get(profondeur));
+            this.filsDroit = new ABR(listObj, objAMettre, poidsMax, profondeur + 1);
         }
     }
-
-
 }
