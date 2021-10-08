@@ -8,11 +8,10 @@ public class ABR {
     private int profondeur;
 
     public ABR(ArrayList<Objet> obj, ArrayList<Objet> objAMettre, float poidsMax, int i) {
-        int size = (objAMettre == null) ? 0 : objAMettre.size();
         this.listeObjets = obj;
         this.profondeur = i;
 
-        if(profondeur < size) {
+        if(profondeur < objAMettre.size()) {
             this.filsGauche = new ABR(listeObjets, objAMettre, poidsMax, profondeur + 1);
             ArrayList<Objet> listObj = new ArrayList<>();
             if(obj != null)
