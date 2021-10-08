@@ -25,9 +25,9 @@ public class SacADos {
         String s = "- Chemin : " + chemin + "\n";
         String obj = "";
         float val_tot = 0;
-        for(int i = objets.size() - 1; i >= 0; --i) {
-            val_tot += objets.get(i).getValeur();
-            obj = obj + "   > " + objets.get(i).toString() + "\n";
+        for(Objet o : objets) {
+            val_tot += o.getValeur();
+            obj = obj + "   > " + o + "\n";
         }
         s = s + "- Poids total : " + String.format("%1$.2f", poids) + "/" + poids_max + "\n";
         s = s + "- Valeur totale : " + val_tot + "\n";
@@ -47,10 +47,10 @@ public class SacADos {
 
     public void gloutonne(ArrayList<Objet> obj) {
         Collections.sort(obj, Collections.reverseOrder());
-        for (int i = 0; i < obj.size(); ++i) {
-            if (obj.get(i).getPoids() + poids < poids_max) {
-                objets.add(obj.get(i));
-                poids += obj.get(i).getPoids();
+        for(Objet o : obj) {
+            if(o.getPoids() + poids < poids_max){
+                objets.add(o);
+                poids += o.getPoids();
             }
         }
     }
@@ -59,18 +59,10 @@ public class SacADos {
         float[][] M = new float[obj.size()][(int) (poids_max + 1)];
 
         for(int j = 0; j <= poids_max; ++j) {
-            if(obj.get(0).getPoids() > j) {
-                M[0][j] = 0;
-            }
-            else {
-                M[0][j] = obj.get(0).getValeur();
-            }
+            M[0][j] = (obj.get(0).getPoids() > j) ? 0 : obj.get(0).getValeur();
             for(int i = 1; i < obj.size(); ++i) {
-                if(obj.get(i).getPoids() > j)
-                    M[i][j] = M[i-1][j];
-                else {
-                    M[i][j] = Math.max(M[i-1][j], M[i-1][(int) (j-obj.get(i).getPoids())] + obj.get(i).getValeur());
-                }
+                M[i][j] = (obj.get(i).getPoids() > j) ? M[i - 1][j] : Math.max(M[i - 1][j],
+                        M[i - 1][(int) (j - obj.get(i).getPoids())] + obj.get(i).getValeur());
             }
         }
 
@@ -93,7 +85,6 @@ public class SacADos {
     }
 
     public void pse(ArrayList<Objet> obj) {
-        ABR arbre = new ABR();
-
+        ABR arbre = new ABR(null, obj, poids_max, 0);
     }
 }
