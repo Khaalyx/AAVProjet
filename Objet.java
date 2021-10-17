@@ -22,7 +22,7 @@ public class Objet implements Comparable <Objet> {
     }
 
     public String toString() {
-        String s = nom + " ; " + poids + " ; " + valeur;
+        String s = nom + " (Poids : " + poids + " ; Valeur : " + valeur + ")";
         return s;
     }
 
