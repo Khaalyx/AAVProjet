@@ -3,75 +3,65 @@ import java.util.ArrayList;
 public class ABR {
     private ArrayList<Objet> listeObjets;
     private ABR filsGauche, filsDroit;
-    private static float borneInf;
+    private static float borneInf = 0;
     private float borneSup;
     private int profondeur;
+    private static ArrayList<Objet> meilleureSolution;
 
     public ABR(ArrayList<Objet> obj, ArrayList<Objet> objAMettre, float poidsMax, int i) {
-        this.listeObjets = obj; // objets du sac au noeud courant
+        this.listeObjets = obj;
         this.profondeur = i;
-        calculBorneSup(obj);
+        calculBorneSup(objAMettre);
         calculBorneInf();
 
         // pas atteint la fin de la liste d'objets à mettre
-        if (profondeur < objAMettre.size()) {
+        if(profondeur < objAMettre.size()) {
             this.filsGauche = new ABR(listeObjets, objAMettre, poidsMax, profondeur + 1);
-            ArrayList<Objet> listObj = new ArrayList<>(); // objets du sac + ajout d'un objet
-            if(obj != null) // si la liste d'objets du noeud courant n'est pas vide
-                for(Objet o : obj)
-                    listObj.add(o); // on les copie dans la new list
-            listObj.add(objAMettre.get(profondeur)); // on y ajoute l'objet à mettre au noeud courant
-            // poids de listObj (objets + objets en plus) <= poidsMax
-            if (poidsListeObjets(listObj) <= poidsMax && borneSup > borneInf)
+            ArrayList<Objet> listObj = new ArrayList<>();
+            if(obj != null) // si la liste d'objets n'est pas vide
+                for (Objet o : obj)
+                    listObj.add(o); // on copie les objet dans la new list
+            listObj.add(objAMettre.get(profondeur)); // on y ajoute l'objet à l'index i = profondeur
+            // poids de listObj (objets + nouvel objet) < poidsMax
+            if(poidsListeObjets(listObj) <= poidsMax && borneSup > borneInf)
                 this.filsDroit = new ABR(listObj, objAMettre, poidsMax, profondeur + 1);
         }
-    }
-    
-    public ABR getFilsGauche() {
-        return filsGauche;
-    }
-
-    public ABR getFilsDroit() {
-        return filsDroit;
-    }
-    
-    /**
-     * Recherche la meilleure solution
-    */
-    public void meilleureSolution() {
-
     }
 
     /**
      * Actualiser borneInf lorsqu’est trouvée une solution réalisable
      * qui possède une valeur plus grande
-    */
-    public void calculBorneInf() {
-        if (valeurListeObjets() > ABR.borneInf) // ABR car borneInf est static
-            ABR.borneInf = valeurListeObjets(); // mise à jour de sa valeur
+     */
+    private void calculBorneInf(){
+        if(valeurListeObjets() > ABR.borneInf) {
+            borneInf = valeurListeObjets();
+            meilleureSolution = this.listeObjets;
+        }
     }
 
     /**
      * Calcule la somme de toutes les valeurs de tous les objets déjà mis dans le sac
      * + la somme des valeurs des objets restants dont on ne sait pas encore s’ils seront dans le sac
-    */
-    public void calculBorneSup(ArrayList<Objet> objets) {
-        float val = 0;
-	val += valeurListeObjets(listeObjets); // valeur totale du noeud courant
-	for (int i = profondeur; i < objets.size(); ++i){
-		val += objets.get(i).getValeur(); // ajouter les valeurs des objets restants
-	}
-	borneSup = val;
+     */
+    private void calculBorneSup(ArrayList<Objet> obj){
+        float val = valeurListeObjets(); // valeur totale du noeud courant
+        if(obj!= null) {
+            for (int i = this.profondeur; i < obj.size(); ++i)
+                val += obj.get(i).getValeur(); // ajouter les valeurs des objets restants
+        }
+        borneSup = val;
     }
 
     /**
      * Retourne la valeur totale de listeObjets
      * @return valTotale
      */
-    public float valeurListeObjets() {
+    private float valeurListeObjets(){
         float valTotale = 0;
-        for (Objet obj : listeObjets)
-            valTotale += obj.getValeur();
+        if(this.listeObjets != null) {
+            for (Objet obj : this.listeObjets)
+                valTotale += obj.getValeur();
+        }
         return valTotale;
     }
 
@@ -79,10 +69,18 @@ public class ABR {
      * Retourne le poids total d'une liste d'objets
      * @return poidsTotal
      */
-    public float poidsListeObjets(ArrayList<Objet> obj) {
+    private float poidsListeObjets(ArrayList<Objet> obj) {
         float poidsTotal = 0;
-        for (Objet o : obj)
-            poidsTotal += o.getPoids();
+        if(obj != null) {
+            for (Objet o : obj) {
+                poidsTotal += o.getPoids();
+            }
+        }
         return poidsTotal;
     }
+
+    public ArrayList<Objet> getMeilleureSolution() {
+        return meilleureSolution;
+    }
+
 }
