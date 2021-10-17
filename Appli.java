@@ -9,7 +9,7 @@ public class Appli {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc = new Scanner(System.in);
         String s = "";
-        while(!s.equals("exit")) {
+        while(!s.equals("exit")) { // pour continuer à résoudre au lieu de re-run
             System.out.print("$>resoudre-sac-a-dos ");
             s = sc.nextLine();
 
@@ -102,7 +102,7 @@ public class Appli {
             String mot = scan.next();
             String nom = mot;
             mot = scan.next();
-            while(!mot.equals(";")) {
+            while(!mot.equals(";")) { // pour les noms d'objets à plusieurs mots
                 nom = nom + " " + mot;
                 mot = scan.next();
             }
