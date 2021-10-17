@@ -70,8 +70,8 @@ public class ABR {
      */
     public float valeurListeObjets(ArrayList<Objet> obj) {
         float valTotale = 0;
-        for (int i = 0; i < obj.size(); ++i)
-            valTotale += obj.get(i).getValeur();
+        for (Objet o : obj)
+            valTotale += o.getValeur();
         return valTotale;
     }
 
@@ -81,8 +81,8 @@ public class ABR {
      */
     public float poidsListeObjets(ArrayList<Objet> obj) {
         float poidsTotal = 0;
-        for (int i = 0; i < obj.size(); ++i)
-            poidsTotal += obj.get(i).getPoids();
+        for (Objet o : obj)
+            poidsTotal += o.getPoids();
         return poidsTotal;
     }
 }
