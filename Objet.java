@@ -30,6 +30,11 @@ public class Objet implements Comparable <Objet> {
         return this.valeur/this.poids;
     }
 
+    /**
+     * Règle de tri pour la méthode Collections.sort()
+     * @param o Objet à comparer
+     * @return comparaison du rapport de this et de l'Objet o
+     */
     @Override
     public int compareTo(Objet o) {
         return Float.compare(this.rapport(), o.rapport());
