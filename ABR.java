@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ABR {
     private ArrayList<Objet> listeObjets;
     private ABR filsGauche, filsDroit;
-    private static float borneInf = 0;
+    private static float borneInf;
     private float borneSup;
     private int profondeur;
     private static ArrayList<Objet> meilleureSolution;
