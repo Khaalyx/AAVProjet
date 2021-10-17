@@ -22,7 +22,7 @@ public class ABR {
                     listObj.add(o); // on les copie dans la new list
             listObj.add(objAMettre.get(profondeur)); // on y ajoute les objets à mettre au noeud courant
             // poids de listObj (objets + objets à mettre?) < poidsMax
-            if (poidsListeObjets(listObj) < poidsMax && borneSup > borneInf)
+            if (poidsListeObjets(listObj) <= poidsMax && borneSup > borneInf)
                 this.filsDroit = new ABR(listObj, objAMettre, poidsMax, profondeur + 1);
         }
     }
