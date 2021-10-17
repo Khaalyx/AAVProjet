@@ -11,7 +11,7 @@ public class ABR {
         this.listeObjets = obj;
         this.profondeur = i;
         calculBorneSup(obj);
-        calculBorneInf(obj);
+        calculBorneInf();
 
         // pas atteint la fin de la liste d'objets à mettre
         if (profondeur < objAMettre.size()) {
@@ -46,9 +46,9 @@ public class ABR {
      * Actualiser borneInf lorsqu’est trouvée une solution réalisable
      * qui possède une valeur plus grande
     */
-    public void calculBorneInf(ArrayList<Objet> objets) {
-        if (valeurListeObjets(objets) > ABR.borneInf) // ABR car borneInf est static
-            ABR.borneInf = valeurListeObjets(objets); // mise à jour de sa valeur
+    public void calculBorneInf() {
+        if (valeurListeObjets() > ABR.borneInf) // ABR car borneInf est static
+            ABR.borneInf = valeurListeObjets(); // mise à jour de sa valeur
     }
 
     /**
@@ -57,21 +57,21 @@ public class ABR {
     */
     public void calculBorneSup(ArrayList<Objet> objets) {
         float val = 0;
-		val += valeurListeObjets(listeObjets); // valeur totale du noeud courant
-		for (int i = profondeur; i < objets.size(); ++i){
-			val += objets.get(i).getValeur(); // ajouter les valeurs des objets restants
-		}
-		borneSup = val;
+	val += valeurListeObjets(listeObjets); // valeur totale du noeud courant
+	for (int i = profondeur; i < objets.size(); ++i){
+		val += objets.get(i).getValeur(); // ajouter les valeurs des objets restants
+	}
+	borneSup = val;
     }
 
     /**
      * Retourne la valeur totale de listeObjets
      * @return valTotale
      */
-    public float valeurListeObjets(ArrayList<Objet> obj) {
+    public float valeurListeObjets() {
         float valTotale = 0;
-        for (Objet o : obj)
-            valTotale += o.getValeur();
+        for (Objet obj : listeObjets)
+            valTotale += obj.getValeur();
         return valTotale;
     }
 
