@@ -57,7 +57,7 @@ public class ABR {
     */
     public void calculBorneSup(ArrayList<Objet> objets) {
         float val = 0;
-		val += valeurListeObjets(listeObjet); // valeur totale du noeud courant
+		val += valeurListeObjets(listeObjets); // valeur totale du noeud courant
 		for (int i = profondeur; i < objets.size(); ++i){
 			val += objets.get(i).getValeur(); // ajouter les valeurs des objets restants
 		}
