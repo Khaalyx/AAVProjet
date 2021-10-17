@@ -60,13 +60,16 @@ public class SacADos {
     /* ------------------- DYNAMIQUE ------------------- */
 
     public void dynamique(ArrayList<Objet> obj) {
-        int[][] M = new int[obj.size()][(int)(poids_max * 10 + 1)];
+        // Matrice d'entiers : multiplier les float par 10 pour retomber sur des entiers
+        float[][] M = new float[obj.size()][(int)(poids_max * 10 + 1)];
 
+        // remplir la première ligne du tableau
         for(int j = 0; j <= poids_max * 10; ++j) {
-            M[0][j] = (obj.get(0).getPoids() * 10 > j) ? 0 : (int) obj.get(0).getValeur();
+            M[0][j] = (obj.get(0).getPoids() * 10 > j) ? 0 : obj.get(0).getValeur();
+            // remplir les autres lignes du tableau
             for(int i = 1; i < obj.size(); ++i) {
                 M[i][j] = (obj.get(i).getPoids() * 10 > j) ? M[i - 1][j] : Math.max(M[i - 1][j],
-                        M[i - 1][(int) (j - obj.get(i).getPoids() * 10)] + (int) obj.get(i).getValeur());
+                        M[i - 1][(int) (j - obj.get(i).getPoids() * 10)] + obj.get(i).getValeur());
             }
         }
 
