@@ -9,7 +9,7 @@ public class ABR {
     private static ArrayList<Objet> meilleureSolution;
 
     public ABR(ArrayList<Objet> obj, ArrayList<Objet> objAMettre, float poidsMax, int i) {
-        this.listeObjets = obj;
+        this.listeObjets = obj; // objets du sac au noeud courant
         this.profondeur = i;
         calculBorneSup(objAMettre);
         calculBorneInf();
@@ -18,11 +18,11 @@ public class ABR {
         if(profondeur < objAMettre.size()) {
             this.filsGauche = new ABR(listeObjets, objAMettre, poidsMax, profondeur + 1);
             ArrayList<Objet> listObj = new ArrayList<>();
-            if(obj != null) // si la liste d'objets n'est pas vide
+            if(obj != null) // si la liste d'objets du noeud courant n'est pas vide
                 for (Objet o : obj)
-                    listObj.add(o); // on copie les objet dans la new list
+                    listObj.add(o); // on copie les objets dans la new list
             listObj.add(objAMettre.get(profondeur)); // on y ajoute l'objet à l'index i = profondeur
-            // poids de listObj (objets + nouvel objet) < poidsMax
+            // poids de listObj (objets + nouvel objet) <= poidsMax
             if(poidsListeObjets(listObj) <= poidsMax && borneSup > borneInf)
                 this.filsDroit = new ABR(listObj, objAMettre, poidsMax, profondeur + 1);
         }
@@ -30,11 +30,12 @@ public class ABR {
 
     /**
      * Actualiser borneInf lorsqu’est trouvée une solution réalisable
-     * qui possède une valeur plus grande
+     * qui possède une valeur plus grande, et enregistrer cette liste d'objets
+     * comme meilleure solution
      */
     private void calculBorneInf(){
         if(valeurListeObjets() > ABR.borneInf) {
-            borneInf = valeurListeObjets();
+            borneInf = valeurListeObjets(); // mise à jour de sa valeur
             meilleureSolution = this.listeObjets;
         }
     }
@@ -79,6 +80,10 @@ public class ABR {
         return poidsTotal;
     }
 
+    /**
+     * Retourne la meilleure solution
+     * @return meilleureSolution une liste d'objets correspondant à la solution optimale
+     */
     public ArrayList<Objet> getMeilleureSolution() {
         return meilleureSolution;
     }
