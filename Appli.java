@@ -8,25 +8,30 @@ public class Appli {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc = new Scanner(System.in);
-        System.out.print("$>resoudre-sac-a-dos ");
-        String s = sc.nextLine();
-
-        while(s.equals("") || !estValide(s)) {
+        String s = "";
+        while(!s.equals("exit")) {
             System.out.print("$>resoudre-sac-a-dos ");
             s = sc.nextLine();
+
+            while (s.equals("") || !estValide(s)) {
+                System.out.print("$>sresoudre-sac-a-dos ");
+                s = sc.nextLine();
+            }
+
+            Scanner scs = new Scanner(s);
+            String chemin = scs.next();
+            if(!chemin.equals("exit")) {
+                ArrayList<Objet> obj = lire(chemin);
+                SacADos sac = new SacADos(chemin, Float.parseFloat(scs.next()));
+                String methode = scs.next();
+                if (scs.hasNext())
+                    methode = methode + " " + scs.next();
+                sac.resoudre(methode, obj);
+                scs.close();
+                System.out.println(sac);
+            }
         }
         sc.close();
-
-        Scanner scs = new Scanner(s);
-        String chemin = scs.next();
-        ArrayList<Objet> obj = lire(chemin);
-        SacADos sac = new SacADos(chemin, Float.parseFloat(scs.next()));
-        String methode = scs.next();
-        if(scs.hasNext())
-            methode = methode + " " + scs.next();
-        sac.resoudre(methode, obj);
-        scs.close();
-        System.out.println(sac.toString());
     }
 
     /**
@@ -38,6 +43,11 @@ public class Appli {
     private static boolean estValide(String s) {
         Scanner scs = new Scanner(s);
         String mot = scs.next();
+
+        if(mot.equals("exit")) {
+            scs.close();
+            return true;
+        }
 
         File f = new File(mot);
         if(!f.exists()) {
