@@ -4,14 +4,11 @@ public class Objet implements Comparable <Objet> {
     private float poids;
     private float valeur;
 
-    public Objet(){}
-
     Objet(String n, float poids, float val){
         nom = n;
         this.poids = poids;
         this.valeur = val;
     }
-
 
     public float getValeur() {
         return valeur;
@@ -21,19 +18,28 @@ public class Objet implements Comparable <Objet> {
         return poids;
     }
 
+    /**
+     * Affiche les objets, leur poids et leur valeur
+     * @return s
+     */
     public String toString() {
         String s = nom + " (Poids : " + poids + " ; Valeur : " + valeur + ")";
         return s;
     }
 
+    /**
+     * Retourne le rapport valeur/poids d'un objet
+     * @return valeur/poids
+     */
     private float rapport() {
         return this.valeur/this.poids;
     }
 
     /**
-     * Règle de tri pour la méthode Collections.sort()
-     * @param o Objet à comparer
-     * @return comparaison du rapport de this et de l'Objet o
+     * Permet de définir sur mesure une règle de triage que Collections.sort devra suivre
+     * Implémenter l'interface de comparateur "Comparable"
+     * @param o Objet spécifié
+     * @return -1, 0 ou 1
      */
     @Override
     public int compareTo(Objet o) {
