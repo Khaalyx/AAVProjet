@@ -95,5 +95,8 @@ public class SacADos {
     
     public void pse(ArrayList<Objet> obj) {
         ABR arbre = new ABR(null, obj, poids_max, 0);
+        objets = arbre.getMeilleureSolution();
+        for(Objet o : objets)
+            poids += o.getPoids();
     }
 }
