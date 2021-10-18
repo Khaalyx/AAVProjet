@@ -39,7 +39,7 @@ public class SacADos {
     public void resoudre(String methode, ArrayList<Objet> obj) {
         if(methode.equals("gloutonne"))
             gloutonne(obj);
-        if(methode.equals("prog. dynamique"))
+        if(methode.equals("dynamique"))
             dynamique(obj);
         if(methode.equals("pse"))
             pse(obj);
