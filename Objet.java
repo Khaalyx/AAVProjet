@@ -3,12 +3,6 @@ public class Objet implements Comparable <Objet> {
     private float poids;
     private float valeur;
 
-    /**
-     * contructeur d'Objet
-     * @param n le nom
-     * @param poids le poids
-     * @param val la valeur
-     */
     Objet(String n, float poids, float val){
         nom = n;
         this.poids = poids;
