@@ -96,22 +96,16 @@ public class Appli {
      * @return une ArrayList des objets
      */
     private static ArrayList<Objet> lire(String file) throws FileNotFoundException {
-        ArrayList<Objet> obj = new ArrayList<Objet>();
+        ArrayList<Objet> obj = new ArrayList<>();
         Scanner scan = new Scanner(new FileInputStream(file));
         while(scan.hasNextLine()){
-            String mot = scan.next();
-            String nom = mot;
-            mot = scan.next();
-            while(!mot.equals(";")) { // pour les noms d'objets à plusieurs mots
-                nom = nom + " " + mot;
-                mot = scan.next();
+            String[] objet = scan.nextLine().split(";");
+            if(objet != null) {
+                String nom = objet[0];
+                float poids = Float.parseFloat(objet[1]);
+                float val = Float.parseFloat(objet[2]);
+                obj.add(new Objet(nom, poids, val));
             }
-            mot = scan.next();
-            float poids = Float.parseFloat(mot);
-            scan.next();
-            mot = scan.next();
-            float val = Float.parseFloat(mot);
-            obj.add(new Objet(nom, poids, val));
         }
         return obj;
     }
