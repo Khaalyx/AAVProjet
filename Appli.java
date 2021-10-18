@@ -5,31 +5,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Appli {
-    
+
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc = new Scanner(System.in);
         String s = "";
-        while(!s.equals("exit")) { // pour continuer à résoudre au lieu de re-run
-            System.out.print("$>resoudre-sac-a-dos ");
+
+        System.out.print("$>resoudre-sac-a-dos ");
+        s = sc.nextLine();
+
+        // tant que la chaine de caract saisie n'est pas valide
+        while (s.equals("") || !estValide(s)) {
+            System.out.print("$>sresoudre-sac-a-dos ");
             s = sc.nextLine();
+        }
 
-            // tant que la chaine de caract saisie n'est pas valide
-            while (s.equals("") || !estValide(s)) {
-                System.out.print("$>sresoudre-sac-a-dos ");
-                s = sc.nextLine();
-            }
-
-            // stock les saisies dans un tableau
-            String[] str = s.split(" ");
-            String chemin = str[0];
-            if(!chemin.equals("exit")) {
-                // la liste des objets qu'on doit mettre dans le sac
-                ArrayList<Objet> obj = lire(chemin);
-                SacADos sac = new SacADos(chemin, Float.parseFloat(str[1]));
-                String methode = str[2];
-                sac.resoudre(methode, obj);
-                System.out.println(sac); // affichage de la solution
-            }
+        // stock les saisies dans un tableau
+        String[] str = s.split(" ");
+        String chemin = str[0];
+        if(!chemin.equals("exit")) {
+            // la liste des objets qu'on doit mettre dans le sac
+            ArrayList<Objet> obj = lire(chemin);
+            SacADos sac = new SacADos(chemin, Float.parseFloat(str[1]));
+            String methode = str[2];
+            sac.resoudre(methode, obj);
+            System.out.println(sac); // affichage de la solution
         }
         sc.close();
     }
@@ -41,14 +40,10 @@ public class Appli {
      */
     private static boolean estValide(String s) {
         String[] str = s.split(" ");
-
-        // si c'est la cmd pour arreter le prog
-        if(str.length == 1 && str[0].equals("exit"))
-            return true;
-
+        
         if(str.length == 3) { // s'il y a le bon nomrbe d'arg
             File f = new File(str[0]);
-            if (!f.exists()) { // vérifaction de l'existence du fichier
+            if (!f.exists()) { // vérification de l'existence du fichier
                 System.out.println("Fichier inexistant\n");
                 return false;
             }
@@ -79,7 +74,7 @@ public class Appli {
     private static ArrayList<Objet> lire(String file) throws FileNotFoundException {
         ArrayList<Objet> obj = new ArrayList<>();
         Scanner scan = new Scanner(new FileInputStream(file));
-        while(scan.hasNextLine()){  // tant qu'il y a encore des lignes on continue de lire
+        while(scan.hasNextLine()){ // tant qu'il y a encore des lignes on continue de lire
             // on stock dans un tableau les données d'une ligne du fichier
             String[] objet = scan.nextLine().split(";");
             if(objet != null) { // s'il y a une ligne vide
