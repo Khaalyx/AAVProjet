@@ -1,19 +1,32 @@
-
 public class Objet implements Comparable <Objet> {
     private String nom;
     private float poids;
     private float valeur;
 
+    /**
+     * contructeur d'Objet
+     * @param n le nom
+     * @param poids le poids
+     * @param val la valeur
+     */
     Objet(String n, float poids, float val){
         nom = n;
         this.poids = poids;
         this.valeur = val;
     }
 
+    /**
+     * Retourne la valeur de l'objet
+     * @return valeur
+     */
     public float getValeur() {
         return valeur;
     }
 
+    /**
+     * Retourne le poids de l'objet
+     * @return poids
+     */
     public float getPoids() {
         return poids;
     }
