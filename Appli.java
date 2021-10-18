@@ -79,10 +79,10 @@ public class Appli {
     private static ArrayList<Objet> lire(String file) throws FileNotFoundException {
         ArrayList<Objet> obj = new ArrayList<>();
         Scanner scan = new Scanner(new FileInputStream(file));
-        while(scan.hasNextLine()){
+        while(scan.hasNextLine()){  // tant qu'il y a encore des lignes on continue de lire
             // on stock dans un tableau les données d'une ligne du fichier
             String[] objet = scan.nextLine().split(";");
-            if(objet != null) {
+            if(objet != null) { // s'il y a une ligne vide
                 String nom = objet[0];
                 float poids = Float.parseFloat(objet[1]);
                 float val = Float.parseFloat(objet[2]);
