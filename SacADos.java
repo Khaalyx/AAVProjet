@@ -4,15 +4,8 @@ import java.util.Collections;
 public class SacADos {
     private String chemin;
     private float poids_max;
-    private float poids;
-    private ArrayList<Objet> objets;
-
-    SacADos(){
-        chemin = null;
-        poids_max = 0;
-        poids = 0;
-        objets = new ArrayList<>();
-    }
+    private float poids; // poids actuel actualisé dans les algos
+    private ArrayList<Objet> objets; // objets du sac
 
     SacADos(String chemin, float poids_maximal){
         this.chemin = chemin;
@@ -21,6 +14,7 @@ public class SacADos {
         objets = new ArrayList<>();
     }
 
+    // Affichage du sac à dos
     public String toString(){
         String s = "- Chemin : " + chemin + "\n";
         String obj = "";
@@ -48,10 +42,12 @@ public class SacADos {
     /* ------------------- GLOUTON ------------------- */
 
     public void gloutonne(ArrayList<Objet> obj) {
+        // On trie les rapports v/p d'obj (règle de tri de compareTo) puis tri décroissant
         Collections.sort(obj, Collections.reverseOrder());
-        for(Objet o : obj) {
-            if(o.getPoids() + poids <= poids_max){
-                objets.add(o);
+        for (Objet o : obj) {
+            // si le poids de l'objet + poids actuel n'excède pas le poids max
+            if (o.getPoids() + poids <= poids_max) {
+                objets.add(o); // on ajoute l'objet dans le sac
                 poids += o.getPoids();
             }
         }
@@ -73,6 +69,7 @@ public class SacADos {
             }
         }
 
+        // redéfinir i et j (M[i][j])
         int i = obj.size() - 1;
         int j = (int)(poids_max * 10);
         while(M[i][j] == M[i][j-1]) {
@@ -95,8 +92,8 @@ public class SacADos {
     
     public void pse(ArrayList<Objet> obj) {
         ABR arbre = new ABR(null, obj, poids_max, 0);
-        objets = arbre.getMeilleureSolution();
-        for(Objet o : objets)
+        objets = arbre.getMeilleureSolution(); // récupère la meilleure solution (le meilleur sac)
+        for (Objet o : objets)
             poids += o.getPoids();
     }
 }
