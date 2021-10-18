@@ -56,7 +56,8 @@ public class SacADos {
     /* ------------------- DYNAMIQUE ------------------- */
 
     public void dynamique(ArrayList<Objet> obj) {
-        // Matrice d'entiers : multiplier les float par 10 pour retomber sur des entiers
+        // multiplier les float par 10 pour retomber sur un entier pour la taille du tableau
+        // car si on fait seulement un cast, le tableau sera trop petit
         float[][] M = new float[obj.size()][(int)(poids_max * 10 + 1)];
 
         // remplir la première ligne du tableau
@@ -69,16 +70,22 @@ public class SacADos {
             }
         }
 
-        // redéfinir i et j (M[i][j])
+        // récupérer les objets à mettre
         int i = obj.size() - 1;
         int j = (int)(poids_max * 10);
+        // on cherche le dernier objet ajouté pour trouver la meilleure val
         while(M[i][j] == M[i][j-1]) {
             --j;
         }
+        // on cherche les autres objets
         while(j > 0) {
+            // tant que la case c est égale à sa diagonale (haut, gauche)
+            // alors ça veut dire qu'on a pas ajouté d'objet
             while(i > 0 && M[i][j] == M[i-1][j]) {
                 --i;
             }
+            // j -= le poids du dernier objet trouvé
+            // car le dernier objet occupe ce poids/espace dans le sac
             j = (int) (j - obj.get(i).getPoids() * 10);
             if(j >= 0) {
                 objets.add(obj.get(i));
